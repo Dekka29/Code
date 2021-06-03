@@ -21,6 +21,10 @@ db.sequelize.sync();
 
 require("./user.routes")(app);
 
+app.listen(3000, () => {
+  console.log("Server iniciado...");
+});
+
 //app.get("/", urlencodedParser, (req, res) => {
 /* let url = req.url;
     url = url.substring(url.indexOf('?') + 1);
@@ -37,7 +41,3 @@ require("./user.routes")(app);
 //    Apellido: ${req.query.apellido} </h1>`);
 //  console.log(req.query);
 //});
-
-app.listen(3000, () => {
-  console.log("Server iniciado...");
-});

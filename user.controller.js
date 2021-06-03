@@ -8,13 +8,55 @@ exports.findAll = (req, res) => {
 
   User.findAll({ where: condition })
     .then((data) => {
-      res.send(data);
+      if (condition != null) {
+        res.send(`<h1>Se encontraron los siguientes datos: <br/>
+        Id Usuario: ${data[0].id} <br/> 
+        Nombre: ${data[0].nombre} <br/>
+        Apellido: ${data[0].apellido} </h1>`);
+      } else {
+        /*let texto = "<h1>Se encontraron los siguientes datos: <br/>";
+        data.forEach((element) =>
+          texto.concat(`Id Usuario: ${element.id} <br/> 
+          Nombre: ${element.nombre} <br/>
+          Apellido: ${element.apellido} <br/><br/>`)
+        );
+        texto.concat("</h1>");
+        console.log(texto);
+        res.send(texto);*/
+        res.send(data);
+      }
     })
     .catch((err) => {
       res.status(500).send({
         message:
           err.message ||
           "Algo sucedio mientras se obtenia informacion de los usuarios.",
+      });
+    });
+};
+
+exports.create = (req, res) => {
+  if (!req.body.nombre) {
+    res.status(400).send({
+      message: "Content nombre can not be empty!",
+    });
+    return;
+  }
+
+  const user = {
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+  };
+
+  // Save UserStory in the database
+  User.create(user)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Algo sucedio mientras se registraba el usuario.",
       });
     });
 };

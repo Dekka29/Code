@@ -4,7 +4,7 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // Create a new User
-  //router.post("/", users.create);
+  router.post("/", users.create);
 
   // Retrieve all Users
   router.get("/", users.findAll);
